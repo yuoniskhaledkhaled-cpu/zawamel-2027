@@ -74,6 +74,10 @@
         .menu-item:last-child {
             border-bottom: none;
         }
+        .menu-item:active {
+            background: rgba(0, 198, 255, 0.15);
+            border-radius: 12px;
+        }
         .menu-right {
             display: flex;
             align-items: center;
@@ -147,6 +151,8 @@
             white-space: nowrap;
             cursor: pointer;
         }
+        .mini-chip:active { background: rgba(0, 198, 255, 0.2); }
+        
         .search-box {
             width: 100%;
             background: rgba(255, 255, 255, 0.06);
@@ -202,7 +208,7 @@
         }
         .fav-icon { color: #ff4b4b; cursor: pointer; font-size: 16px; }
 
-        /* مشغل الصوت السفلي الثابت */
+        /* مشغل الصوت السفلي */
         .player-bar {
             position: fixed;
             bottom: 0;
@@ -280,21 +286,21 @@
                 </div>
                 <span style="color: #777;">‹</span>
             </div>
-            <div class="menu-item" onclick="alert('قائمتي المفضلة')">
+            <div class="menu-item" onclick="alert('قائمتي المفضلة: فارغة حالياً، أضف زاملك المفضل!')">
                 <div class="menu-right">
                     <div class="icon-box bg-red">❤</div>
                     <span class="menu-text">قائمتي المفضلة</span>
                 </div>
                 <span style="color: #777;">‹</span>
             </div>
-            <div class="menu-item" onclick="alert('تطبيقاتنا قادمة قريباً')">
+            <div class="menu-item" onclick="alert('تطبيقاتنا: الإصدارات القادمة لعام 2027 قيد Entwicklung')">
                 <div class="menu-right">
                     <div class="icon-box bg-gray">+</div>
                     <span class="menu-text">تطبيقاتنا</span>
                 </div>
                 <span style="color: #777;">‹</span>
             </div>
-            <div class="menu-item" onclick="alert('شكراً لتقييمك التطبيق')">
+            <div class="menu-item" onclick="alert('شكراً لتقييمك التطبيق بـ 5 نجوم!')">
                 <div class="menu-right">
                     <div class="icon-box bg-orange">★</div>
                     <span class="menu-text">قيمنا + تعليق</span>
@@ -314,9 +320,9 @@
         </div>
 
         <div class="action-row">
-            <div class="mini-chip">⏱ مؤقت</div>
-            <div class="mini-chip">🎵 نغمة</div>
-            <div class="mini-chip" onclick="alert('قيمنا')">⭐ قيمنا</div>
+            <div class="mini-chip" onclick="alert('تم تفعيل مؤقت النوم (بعد 30 دقيقة)')">⏱ مؤقت</div>
+            <div class="mini-chip" onclick="alert('تم تعيين الزامل كنغمة رنين بنجاح')">🎵 نغمة</div>
+            <div class="mini-chip" onclick="alert('شكراً لتقييمك الراقي')">⭐ قيمنا</div>
             <div class="mini-chip" onclick="location.reload()">🔄 تحديث</div>
         </div>
 
@@ -329,21 +335,21 @@
             <div class="z-item" onclick="playZamal('زامل العهد والوفاء')">
                 <span class="z-title">زامل العهد والوفاء</span>
                 <div class="z-controls">
-                    <span class="fav-icon">❤</span>
+                    <span class="fav-icon" onclick="event.stopPropagation(); alert('تمت الإضافة للمفضلة');">❤</span>
                     <div class="play-circle">▶</div>
                 </div>
             </div>
             <div class="z-item" onclick="playZamal('زامل صاعقة الحق')">
                 <span class="z-title">زامل صاعقة الحق</span>
                 <div class="z-controls">
-                    <span class="fav-icon" style="color:#777">❤</span>
+                    <span class="fav-icon" style="color:#777" onclick="event.stopPropagation(); alert('تمت الإضافة للمفضلة');">❤</span>
                     <div class="play-circle">▶</div>
                 </div>
             </div>
             <div class="z-item" onclick="playZamal('زامل سيل الحزم')">
                 <span class="z-title">زامل سيل الحزم</span>
                 <div class="z-controls">
-                    <span class="fav-icon" style="color:#777">❤</span>
+                    <span class="fav-icon" style="color:#777" onclick="event.stopPropagation(); alert('تمت الإضافة للمفضلة');">❤</span>
                     <div class="play-circle">▶</div>
                 </div>
             </div>
@@ -359,15 +365,17 @@
             <span id="totalTime">00:00</span>
         </div>
         <div class="player-btns">
-            <button class="p-btn">🔂</button>
-            <button class="p-btn">⏮</button>
-            <button class="main-play" onclick="togglePlay()">▶</button>
-            <button class="p-btn">⏭</button>
-            <button class="p-btn">🔀</button>
+            <button class="p-btn" onclick="alert('التكرار مفعل')">🔂</button>
+            <button class="p-btn" onclick="alert('الزامل السابق')">⏮</button>
+            <button class="main-play" id="mainPlayBtn" onclick="togglePlay()">▶</button>
+            <button class="p-btn" onclick="alert('الزامل التالي')">⏭</button>
+            <button class="p-btn" onclick="alert('تشغيل عشوائي')">🔀</button>
         </div>
     </div>
 
     <script>
+        let isPlaying = false;
+
         function switchView(viewId) {
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
             document.getElementById(viewId).classList.add('active');
@@ -375,13 +383,23 @@
 
         function playZamal(name) {
             document.getElementById('currentPlaying').innerText = name;
-            document.getElementById('progressFill').style.width = '30%';
+            document.getElementById('progressFill').style.width = '45%';
             document.getElementById('currentTime').innerText = '01:15';
             document.getElementById('totalTime').innerText = '03:45';
+            document.getElementById('mainPlayBtn').innerText = '⏸';
+            isPlaying = true;
         }
 
         function togglePlay() {
-            alert('تم تبديل التشغيل والإيقاف المؤقت');
+            isPlaying = !isPlaying;
+            let btn = document.getElementById('mainPlayBtn');
+            if (isPlaying) {
+                btn.innerText = '⏸';
+                alert('استئناف التشغيل');
+            } else {
+                btn.innerText = '▶';
+                alert('إيقاف مؤقت');
+            }
         }
 
         function filterZawamel() {
