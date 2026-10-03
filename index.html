@@ -9,61 +9,393 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Tahoma, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         body {
-            background-color: #121212;
+            background: linear-gradient(135deg, #090d16, #121824, #05070a);
             color: #ffffff;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
+            padding: 15px;
+        }
+        .view {
+            width: 100%;
+            max-width: 420px;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+        .view.active {
+            display: flex;
+        }
+        /* الشاشة الرئيسية */
+        .home-logo {
+            width: 110px;
+            height: 110px;
+            background: linear-gradient(135deg, #00c6ff, #9b51e0);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: flex;
+            align-items: center;
             justify-content: center;
-            min-height: 100vh;
-            padding: 20px;
-            text-align: center;
+            margin: 30px auto 20px;
+            box-shadow: 0 10px 25px rgba(0, 198, 255, 0.3);
         }
-        .container {
-            background: #1e1e1e;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            max-width: 400px;
-            width: 100%;
+        .home-logo svg {
+            width: 48px;
+            height: 48px;
+            fill: #ffffff;
         }
-        h1 {
-            color: #00c6ff;
-            margin-bottom: 15px;
+        .home-title {
             font-size: 24px;
-        }
-        p {
-            color: #b0b0b0;
-            margin-bottom: 25px;
-            font-size: 16px;
-        }
-        .btn {
-            background: linear-gradient(135deg, #00c6ff, #0072ff);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            font-size: 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            width: 100%;
             font-weight: bold;
-            box-shadow: 0 4px 10px rgba(0, 114, 255, 0.3);
+            margin-bottom: 30px;
+            letter-spacing: 0.5px;
         }
-        .btn:active {
-            transform: scale(0.98);
+        .menu-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border-radius: 22px;
+            width: 100%;
+            padding: 8px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+        }
+        .menu-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+        .menu-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .icon-box {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        .bg-blue { background: rgba(0, 198, 255, 0.15); color: #00c6ff; }
+        .bg-red { background: rgba(255, 75, 75, 0.15); color: #ff4b4b; }
+        .bg-gray { background: rgba(255, 255, 255, 0.1); color: #cccccc; }
+        .bg-orange { background: rgba(255, 165, 0, 0.15); color: #ffa500; }
+        .menu-text { font-size: 16px; font-weight: 500; }
+
+        /* شاشة قائمة الزوامل والتشغيل */
+        .top-bar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .icon-btn-top {
+            background: rgba(255, 255, 255, 0.08);
+            border: none;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .badge-btn {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #00c6ff;
+            border: 1px solid rgba(0, 198, 255, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .action-row {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            margin-bottom: 15px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+        .mini-chip {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px 14px;
+            border-radius: 15px;
+            font-size: 13px;
+            color: #ddd;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+        .search-box {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 14px;
+            width: 100%;
+            outline: none;
+        }
+        .search-box input::placeholder { color: #888; }
+        
+        .zawamel-list {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 120px;
+        }
+        .z-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .z-item:active { background: rgba(0, 198, 255, 0.15); }
+        .z-title { font-size: 15px; font-weight: 500; }
+        .z-controls { display: flex; align-items: center; gap: 12px; }
+        .play-circle {
+            width: 38px;
+            height: 38px;
+            background: #00c6ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #05070a;
+            font-size: 14px;
+        }
+        .fav-icon { color: #ff4b4b; cursor: pointer; font-size: 16px; }
+
+        /* مشغل الصوت السفلي الثابت */
+        .player-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(15, 20, 30, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 20px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 -10px 25px rgba(0,0,0,0.5);
+        }
+        .player-title { font-size: 13px; color: #00c6ff; margin-bottom: 8px; }
+        .progress-container {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            font-size: 11px;
+            color: #888;
+        }
+        .progress-bar {
+            flex: 1;
+            height: 4px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 2px;
+            position: relative;
+            cursor: pointer;
+        }
+        .progress-fill { width: 0%; height: 100%; background: #00c6ff; border-radius: 2px; }
+        .player-btns {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .p-btn {
+            background: none;
+            border: none;
+            color: #bbb;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .main-play {
+            width: 48px;
+            height: 48px;
+            background: #00c6ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #05070a;
+            font-size: 18px;
+            box-shadow: 0 4px 15px rgba(0, 198, 255, 0.4);
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>زوامل عيسى الليث 2027</h1>
-        <p>التطبيق يعمل بنجاح تام وجاهز لخدمتكم!</p>
-        <button class="btn" onclick="alert('أهلاً بك يا بشمهندس يونس، التطبيق شغال 100%!')">اضغط هنا للاختبار</button>
+    <!-- الشاشة الأولى: القائمة الرئيسية -->
+    <div id="homeView" class="view active">
+        <div class="home-logo">
+            <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.91-3c-.49 0-.9.36-.98.85C16.52 14.2 14.47 16 12 16s-4.52-1.8-4.93-4.15c-.08-.49-.49-.85-.98-.85-.61 0-1.09.54-1 1.14.49 3 2.89 5.35 5.91 5.78V20c0 .55.45 1 1 1s1-.45 1-1v-2.08c3.02-.43 5.42-2.78 5.91-5.78.1-.6-.39-1.14-1-1.14z"/></svg>
+        </div>
+        <h1 class="home-title">زوامل عيسى الليث</h1>
+
+        <div class="menu-card">
+            <div class="menu-item" onclick="switchView('playerView')">
+                <div class="menu-right">
+                    <div class="icon-box bg-blue">▶</div>
+                    <span class="menu-text">بدء الاستماع</span>
+                </div>
+                <span style="color: #777;">‹</span>
+            </div>
+            <div class="menu-item" onclick="alert('قائمتي المفضلة')">
+                <div class="menu-right">
+                    <div class="icon-box bg-red">❤</div>
+                    <span class="menu-text">قائمتي المفضلة</span>
+                </div>
+                <span style="color: #777;">‹</span>
+            </div>
+            <div class="menu-item" onclick="alert('تطبيقاتنا قادمة قريباً')">
+                <div class="menu-right">
+                    <div class="icon-box bg-gray">+</div>
+                    <span class="menu-text">تطبيقاتنا</span>
+                </div>
+                <span style="color: #777;">‹</span>
+            </div>
+            <div class="menu-item" onclick="alert('شكراً لتقييمك التطبيق')">
+                <div class="menu-right">
+                    <div class="icon-box bg-orange">★</div>
+                    <span class="menu-text">قيمنا + تعليق</span>
+                </div>
+                <span style="color: #777;">‹</span>
+            </div>
+        </div>
     </div>
 
+    <!-- الشاشة الثانية: قائمة الزوامل والتشغيل -->
+    <div id="playerView" class="view">
+        <div class="top-bar">
+            <button class="icon-btn-top" onclick="switchView('homeView')">🏠</button>
+            <div class="badge-btn">
+                <span>🎙️</span> عيسى الليث
+            </div>
+        </div>
+
+        <div class="action-row">
+            <div class="mini-chip">⏱ مؤقت</div>
+            <div class="mini-chip">🎵 نغمة</div>
+            <div class="mini-chip" onclick="alert('قيمنا')">⭐ قيمنا</div>
+            <div class="mini-chip" onclick="location.reload()">🔄 تحديث</div>
+        </div>
+
+        <div class="search-box">
+            <span>🔍</span>
+            <input type="text" placeholder="بحث سريع عن زامل..." id="searchInput" onkeyup="filterZawamel()">
+        </div>
+
+        <div class="zawamel-list" id="zawamelList">
+            <div class="z-item" onclick="playZamal('زامل العهد والوفاء')">
+                <span class="z-title">زامل العهد والوفاء</span>
+                <div class="z-controls">
+                    <span class="fav-icon">❤</span>
+                    <div class="play-circle">▶</div>
+                </div>
+            </div>
+            <div class="z-item" onclick="playZamal('زامل صاعقة الحق')">
+                <span class="z-title">زامل صاعقة الحق</span>
+                <div class="z-controls">
+                    <span class="fav-icon" style="color:#777">❤</span>
+                    <div class="play-circle">▶</div>
+                </div>
+            </div>
+            <div class="z-item" onclick="playZamal('زامل سيل الحزم')">
+                <span class="z-title">زامل سيل الحزم</span>
+                <div class="z-controls">
+                    <span class="fav-icon" style="color:#777">❤</span>
+                    <div class="play-circle">▶</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- مشغل الصوت السفلي -->
+    <div class="player-bar">
+        <div class="player-title" id="currentPlaying">اختر زاملاً للبدء</div>
+        <div class="progress-container">
+            <span id="currentTime">00:00</span>
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+            <span id="totalTime">00:00</span>
+        </div>
+        <div class="player-btns">
+            <button class="p-btn">🔂</button>
+            <button class="p-btn">⏮</button>
+            <button class="main-play" onclick="togglePlay()">▶</button>
+            <button class="p-btn">⏭</button>
+            <button class="p-btn">🔀</button>
+        </div>
+    </div>
+
+    <script>
+        function switchView(viewId) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+        }
+
+        function playZamal(name) {
+            document.getElementById('currentPlaying').innerText = name;
+            document.getElementById('progressFill').style.width = '30%';
+            document.getElementById('currentTime').innerText = '01:15';
+            document.getElementById('totalTime').innerText = '03:45';
+        }
+
+        function togglePlay() {
+            alert('تم تبديل التشغيل والإيقاف المؤقت');
+        }
+
+        function filterZawamel() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let items = document.getElementsByClassName('z-item');
+            for (let i = 0; i < items.length; i++) {
+                let title = items[i].getElementsByClassName('z-title')[0].innerText;
+                if (title.toLowerCase().includes(input)) {
+                    items[i].style.display = "flex";
+                } else {
+                    items[i].style.display = "none";
+                }
+            }
+        }
+    </script>
 </body>
 </html>
